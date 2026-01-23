@@ -1,0 +1,112 @@
+name: e_refund_v1
+
+services:
+  # --------------------------
+  # Database - MariaDB
+  # --------------------------
+  db:
+    build:
+      context: ..
+      dockerfile: docker/db.Dockerfile
+    image: erefund_mariadb:latest
+    container_name: e_refund_db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: refund_db
+      MARIADB_USER: user
+      MARIADB_PASSWORD: userpassword
+      TZ: Asia/Manila 
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  # --------------------------
+  # Frontend - React
+  # --------------------------
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+    container_name: e_refund_frontend
+    restart:  unless-stopped
+    working_dir: /app
+    volumes:
+      - ../frontend:/app
+      - node_modules_cache:/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    networks:
+      - app_network
+    
+  # --------------------------
+  # Backend - Django
+  # --------------------------
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/backend.Dockerfile
+    env_file:
+      - ../backend/.env
+    container_name: e_refund_backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: db   # override host for Docker
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ../backend:/app
+      - ../media_data:/app/media
+    ports:
+      - "8000:8000"
+    networks:
+      - app_network
+  
+  # --------------------------
+  # PDF Service - ReportLab
+  # --------------------------
+  # reportlab:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/reportlab.Dockerfile
+  #   container_name: e_refund_reportlab
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ../reportlab:/app
+  #     - ../generated_pdfs:/app/output
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - app_network
+
+
+  # --------------------------
+  # Proxy Server - Nginx
+  # --------------------------
+  proxy:
+    build:
+      context: ..
+      dockerfile: docker/nginx.Dockerfile
+    container_name: e_refund_proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"  # Expose Nginx on port 80
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  node_modules_cache:
+  db_data:
