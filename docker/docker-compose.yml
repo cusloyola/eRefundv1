@@ -11,6 +11,8 @@ services:
     image: erefund_mariadb:latest
     container_name: e_refund_db
     restart: unless-stopped
+    ports:
+      - "3306:3306" # Expose MariaDB port    
     environment:
       MARIADB_ROOT_PASSWORD: rootpassword
       MARIADB_DATABASE: refund_db
