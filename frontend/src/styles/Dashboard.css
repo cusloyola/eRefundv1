@@ -1,0 +1,101 @@
+/* Dashboard.css - Custom styles for dashboard layout and cards */
+
+.dashboard-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f3f4f6;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2.5rem 1rem;
+}
+
+.dashboard-welcome {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #11121a;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-card-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #001c77;
+  margin-bottom: 0.5rem;
+}
+.dashboard-card-value-green {
+  color: #16a34a;
+}
+.dashboard-card-value-pink {
+  color: #ec4899;
+}
+.dashboard-card-label {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.dashboard-info {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+.dashboard-info-item {
+  font-size: 1.1rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+.dashboard-info-user {
+  color: #001c77;
+  font-weight: 600;
+}
