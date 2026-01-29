@@ -7,6 +7,7 @@ import Operations from './pages/Operations'
 import Inquiry from './pages/Inquiry'
 import Reports from './pages/Reports'
 import Help from './pages/Help'
+import NotFound from './components/NotFound'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/inquiry" element={<Inquiry />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/help" element={<Help />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer position="top-center" autoClose={1500} theme="colored" />
     </>

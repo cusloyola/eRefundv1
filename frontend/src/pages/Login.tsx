@@ -202,6 +202,15 @@ function Login() {
                     >
                         {isLoading ? 'Signing in...' : 'Sign In'}
                     </button>
+                    <div className="login-copyright" style={{
+                        marginTop: '2.2rem',
+                        textAlign: 'center',
+                        color: '#b0b3c1',
+                        fontSize: '0.95rem',
+                        letterSpacing: '0.01em'
+                    }}>
+                        &copy; {new Date().getFullYear()} Wallem eRefund. All rights reserved.
+                    </div>
                 </form>
             </div>
         </div>

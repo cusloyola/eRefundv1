@@ -1,123 +1,206 @@
 // NavBar.tsx
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom"; // ← Changed from Link to NavLink
+import { NavLink, useNavigate } from "react-router-dom"; // ← Changed from Link to NavLink
 import "../styles/NavBar.css";
-
-// Optional: Use react-icons (npm install react-icons)
-import { FiMenu, FiX } from "react-icons/fi";
+import LogoutModal from "./LogoutModal";
+import { FaChevronDown } from "react-icons/fa";
 
 const NavBar: React.FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+    const closeMenu = () => setOpenDropdown(null);
+    const toggleDropdown = (dropdown: string) => {
+        setOpenDropdown((prev) => (prev === dropdown ? null : dropdown));
+    };
+    const navigate = useNavigate();
 
-    const toggleMenu = () => setIsOpen(!isOpen);
-    const closeMenu = () => setIsOpen(false);
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userEmail');
+        navigate('/login');
+    };
 
     return (
-        <nav className="navbar">
-            <div className="navbar-container">
-                <NavLink to="/dashboard" className="navbar-logo" onClick={closeMenu}>
-                    eRefund
-                </NavLink>
-
-                {/* Desktop links */}
-                <div className="navbar-links desktop-links">
-                    <NavLink
-                        to="/operations"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Operations
+        <>
+            <nav className="navbar">
+                <div className="navbar-container">
+                    <NavLink to="/dashboard" className="navbar-logo" onClick={closeMenu}>
+                        eRefund
                     </NavLink>
 
-                    <NavLink
-                        to="/inquiry"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Inquiry
-                    </NavLink>
+                    {/* Desktop links */}
+                    <div className="navbar-links desktop-links">
+                        <div className="navbar-dropdown">
+                            <button
+                                className="navbar-link dropdown-toggle"
+                                onClick={() => toggleDropdown('operations')}
+                                aria-expanded={openDropdown === 'operations'}
+                            >
+                                Operations <FaChevronDown className="dropdown-icon" />
+                            </button>
+                            {openDropdown === 'operations' && (
+                                <div className="dropdown-menu">
+                                    <NavLink
+                                        to="/operations/request"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Request/Process Refund
+                                    </NavLink>
+                                    <NavLink
+                                        to="/operations/hold"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Hold/Approve Refund
+                                    </NavLink>
+                                    <NavLink
+                                        to="/operations/prepare-check"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Prepare Check
+                                    </NavLink>
+                                    <NavLink
+                                        to="/operations/release"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Release (Batch Update)
+                                    </NavLink>
+                                    <NavLink
+                                        to="/operations/import-files"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Import Files for Update
+                                    </NavLink>
+                                </div>
+                            )}
+                        </div>
 
-                    <NavLink
-                        to="/reports"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Reports
-                    </NavLink>
+                        <div className="navbar-dropdown">
+                            <button
+                                className="navbar-link dropdown-toggle"
+                                onClick={() => toggleDropdown('inquiry')}
+                                aria-expanded={openDropdown === 'inquiry'}
+                            >
+                                Inquiry <FaChevronDown className="dropdown-icon" />
+                            </button>
+                            {openDropdown === 'inquiry' && (
+                                <div className="dropdown-menu">
+                                    <NavLink
+                                        to="/inquiry"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        List of Refund
+                                    </NavLink>
+                                </div>
+                            )}
+                        </div>
 
-                    <NavLink
-                        to="/help"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Help
-                    </NavLink>
+                        <div className="navbar-dropdown">
+                            <button
+                                className="navbar-link dropdown-toggle"
+                                onClick={() => toggleDropdown('reports')}
+                                aria-expanded={openDropdown === 'reports'}
+                            >
+                                Reports <FaChevronDown className="dropdown-icon" />
+                            </button>
+                            {openDropdown === 'reports' && (
+                                <div className="dropdown-menu">
+                                    <NavLink
+                                        to="/reports"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Processed Refund
+                                    </NavLink>
+                                    <NavLink
+                                        to="/reports"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Container Charges
+                                    </NavLink>
+                                    <NavLink
+                                        to="/reports"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Check Preparation
+                                    </NavLink>
+                                    <NavLink
+                                        to="/reports"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        For Export
+                                    </NavLink>
+                                    <NavLink
+                                        to="/reports"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Summary of Container Detention
+                                    </NavLink>
+                                </div>
+                            )}
+                        </div>
 
-                    <NavLink
-                        to="/login"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Logout
-                    </NavLink>
+                        <div className="navbar-dropdown">
+                            <button
+                                className="navbar-link dropdown-toggle"
+                                onClick={() => toggleDropdown('help')}
+                                aria-expanded={openDropdown === 'help'}
+                            >
+                                Help <FaChevronDown className="dropdown-icon" />
+                            </button>
+                            {openDropdown === 'help' && (
+                                <div className="dropdown-menu">
+                                    <NavLink
+                                        to="/help"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Help Topics
+                                    </NavLink>
+                                    <NavLink
+                                        to="/help"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        Index
+                                    </NavLink>
+                                    <NavLink
+                                        to="/help"
+                                        className="dropdown-item"
+                                        onClick={closeMenu}
+                                    >
+                                        About
+                                    </NavLink>
+                                </div>
+                            )}
+                        </div>
+
+                        <button
+                            type="button"
+                            className="navbar-link"
+                            onClick={() => {
+                                setIsLogoutModalOpen(true);
+                                closeMenu();
+                            }}
+                        >
+                            Logout
+                        </button>
+                    </div>
+
                 </div>
-
-                {/* Hamburger button - visible on mobile/tablet */}
-                <button
-                    className="hamburger"
-                    onClick={toggleMenu}
-                    aria-label={isOpen ? "Close menu" : "Open menu"}
-                    aria-expanded={isOpen}
-                >
-                    {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-                </button>
-            </div>
-
-            {/* Mobile menu (slides in / dropdown) */}
-            <div className={`mobile-menu ${isOpen ? "open" : ""}`}>
-                <div className="mobile-links">
-                    <NavLink
-                        to="/dashboard"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Dashboard
-                    </NavLink>
-
-                    <NavLink
-                        to="/profile"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Profile
-                    </NavLink>
-
-                    <NavLink
-                        to="/logout"
-                        className={({ isActive }) =>
-                            `navbar-link ${isActive ? "active" : ""}`
-                        }
-                        onClick={closeMenu}
-                    >
-                        Logout
-                    </NavLink>
-                </div>
-            </div>
-        </nav>
+            </nav>
+            <LogoutModal isOpen={isLogoutModalOpen} onConfirm={handleLogout} onCancel={() => setIsLogoutModalOpen(false)}
+            />
+        </>
     );
 };
 
