@@ -17,7 +17,6 @@ const Dashboard: React.FC = () => {
                     <h1 className="dashboard-title">Welcome to eRefund</h1>
                     <p className="dashboard-subtitle">
                         Your one-stop portal for managing refund operations, inquiries, and reports.<br />
-                        Select an action below to get started.
                     </p>
                 </section>
                 <section className="dashboard-cards">

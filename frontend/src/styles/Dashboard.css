@@ -1,85 +1,50 @@
-/* Dashboard logo styles */
-.dashboard-logo-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 1.2rem;
-}
-.dashboard-logo {
-	max-width: 400px;
-	height: auto;
-	display: block;
-	filter: drop-shadow(0 2px 8px rgba(0,28,119,0.08));
-}
-.datetime-bar {
-	width: 100%;
-	background: #fff;
-	border-top: 1px solid var(--hover-clr);
-	color: var(--text-clr);
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0.5rem 2rem;
-	font-size: 1rem;
-	box-shadow: 0 -2px 8px 0 rgba(0,28,119,0.04);
-	position: sticky;
-	bottom: 0;
-	z-index: 10;
-	min-height: 2.5rem;
-}
+/* ============================================
+   MODERN PREMIUM DASHBOARD DESIGN
+   ============================================ */
 
-.datetime-bar-section {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-}
-.datetime-bar-section.left {
-	flex: 1;
-	justify-content: flex-start;
-}
-.datetime-bar-section.center {
-	flex: 1;
-	justify-content: center;
-	text-align: center;
-}
-.datetime-bar-section.right {
-	flex: 1;
-	justify-content: flex-end;
-	text-align: right;
-	gap: 0.75rem;
-}
-.datetime-bar-user {
-	font-weight: 500;
-	color: var(--color-primary);
-}
-.datetime-bar-date {
-	font-weight: 500;
-	color: var(--color-primary);
-}
-.datetime-bar-time {
-	font-family: 'Poppins', monospace;
-	font-weight: 600;
-	color: var(--accent-clr);
-	letter-spacing: 1px;
-}
-.datetime-bar-company {
-	font-weight: 700;
-	color: var(--color-primary);
-	margin-left: 0.5rem;
-	letter-spacing: 1px;
-}
-.datetime-bar-logo {
-	height: 1.6rem;
-	margin-left: 0.5rem;
-	vertical-align: middle;
-}
-
+/* Dashboard Root - Gradient Background */
 .dashboard-root {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	background: linear-gradient(135deg,
+			hsl(225, 30%, 96%) 0%,
+			hsl(220, 35%, 97%) 50%,
+			hsl(215, 30%, 95%) 100%);
+	position: relative;
+	overflow-x: hidden;
 }
 
+/* Animated background pattern */
+.dashboard-root::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background:
+		radial-gradient(circle at 20% 30%, hsla(225, 100%, 23%, 0.04) 0%, transparent 50%),
+		radial-gradient(circle at 80% 70%, hsla(225, 100%, 25%, 0.03) 0%, transparent 50%),
+		radial-gradient(circle at 50% 50%, hsla(225, 100%, 30%, 0.02) 0%, transparent 50%);
+	pointer-events: none;
+	animation: backgroundPulse 15s ease-in-out infinite;
+	z-index: 0;
+}
+
+@keyframes backgroundPulse {
+
+	0%,
+	100% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.7;
+	}
+}
+
+/* Dashboard Content */
 .dashboard-content {
 	flex: 1;
 	display: flex;
@@ -89,202 +54,497 @@
 	padding: 3rem 1rem 2rem 1rem;
 	margin: 0 auto;
 	width: 100%;
+	position: relative;
+	z-index: 1;
 }
 
+/* Logo Container with Animation */
+.dashboard-logo-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 1.5rem;
+	animation: fadeInDown 0.8s ease-out;
+}
+
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.dashboard-logo {
+	max-width: 400px;
+	height: auto;
+	display: block;
+	filter: drop-shadow(0 4px 16px rgba(0, 28, 119, 0.12));
+	transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.dashboard-logo:hover {
+	transform: scale(1.02);
+	filter: drop-shadow(0 6px 20px rgba(0, 28, 119, 0.18));
+}
+
+/* Welcome Section with Gradient Text */
 .dashboard-welcome {
 	text-align: center;
-	margin-bottom: 2.5rem;
+	margin-bottom: 3rem;
+	animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .dashboard-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	color: #11121a;
-	margin-bottom: 0.5rem;
-	letter-spacing: -1px;
+	font-size: 3.5rem;
+	font-weight: 800;
+	background: linear-gradient(135deg,
+			hsl(225, 100%, 23%) 0%,
+			hsl(225, 100%, 30%) 50%,
+			hsl(225, 90%, 38%) 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	margin-bottom: 0.8rem;
+	letter-spacing: -1.5px;
+	text-shadow: 0 2px 20px rgba(0, 28, 119, 0.1);
+	animation: gradientShift 8s ease infinite;
+	background-size: 200% 200%;
+}
+
+@keyframes gradientShift {
+
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
 }
 
 .dashboard-subtitle {
-	font-size: 1.15rem;
-	color: var(--secondary-text-clr);
+	font-size: 1.2rem;
+	color: hsl(220, 20%, 45%);
 	margin-bottom: 0.5rem;
+	font-weight: 400;
+	line-height: 1.6;
 }
 
+/* Dashboard Cards Grid */
 .dashboard-cards {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 2rem;
 	width: 100%;
+	max-width: 1400px;
 	justify-items: center;
 	align-items: stretch;
 	padding-bottom: 0.5rem;
+	animation: fadeInUp 0.8s ease-out 0.4s both;
 }
-.dashboard-cards::-webkit-scrollbar {
-	height: 8px;
-}
-.dashboard-cards::-webkit-scrollbar-thumb {
-	background: var(--hover-clr);
-	border-radius: 4px;
-}
-.dashboard-cards::-webkit-scrollbar-track {
-	background: #e0e7ef;
-}
+
+/* Premium Glassmorphism Cards */
 .dashboard-card {
 	min-width: 260px;
 	max-width: 320px;
-	flex: 0 0 260px;
-	background: #fff;
-	border-radius: 1.25rem;
-	box-shadow: 0 2px 12px 0 rgba(0,28,119,0.07), 0 1.5px 4px 0 rgba(0,28,119,0.04);
-	padding: 2.2rem 1.7rem 1.7rem 1.7rem;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border-radius: 1.5rem;
+	box-shadow:
+		0 8px 32px 0 rgba(0, 28, 119, 0.08),
+		0 2px 8px 0 rgba(0, 28, 119, 0.04),
+		inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+	padding: 2.5rem 2rem 2rem 2rem;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	text-decoration: none;
 	color: var(--text-clr);
-	transition: box-shadow 0.18s, transform 0.18s, background 0.18s, border 0.18s;
-	border: 1.5px solid #f0f2fa;
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	border: 1.5px solid rgba(255, 255, 255, 0.5);
 	position: relative;
 	cursor: pointer;
 	overflow: hidden;
 }
+
+/* Gradient overlay on hover */
+.dashboard-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(135deg,
+			hsla(225, 100%, 95%, 0) 0%,
+			hsla(225, 100%, 92%, 0.3) 100%);
+	opacity: 0;
+	transition: opacity 0.4s ease;
+	pointer-events: none;
+	z-index: 0;
+}
+
+/* Animated shine effect */
+.dashboard-card::after {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: linear-gradient(45deg,
+			transparent 30%,
+			rgba(255, 255, 255, 0.3) 50%,
+			transparent 70%);
+	transform: translateX(-100%) translateY(-100%) rotate(45deg);
+	transition: transform 0.6s ease;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.dashboard-card:hover::after {
+	transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+.dashboard-card:hover::before {
+	opacity: 1;
+}
+
+/* Enhanced hover state */
+.dashboard-card:hover,
+.dashboard-card:focus {
+	box-shadow:
+		0 20px 60px 0 rgba(0, 28, 119, 0.2),
+		0 8px 20px 0 rgba(0, 28, 119, 0.12),
+		inset 0 1px 0 0 rgba(255, 255, 255, 1),
+		0 0 0 3px hsla(225, 100%, 23%, 0.3);
+	background: rgba(255, 255, 255, 0.95);
+	outline: none;
+	border: 1.5px solid hsl(225, 100%, 30%);
+	transform: translateY(-8px) scale(1.03);
+}
+
+/* Card Icon with Gradient */
+.dashboard-card-icon {
+	font-size: 2.5rem;
+	margin-bottom: 1.3rem;
+	background: linear-gradient(135deg,
+			hsl(225, 100%, 23%) 0%,
+			hsl(225, 100%, 35%) 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	filter: drop-shadow(0 2px 8px rgba(0, 28, 119, 0.15));
+	transition: all 0.3s ease;
+	position: relative;
+	z-index: 2;
+}
+
+.dashboard-card:hover .dashboard-card-icon {
+	transform: scale(1.1) rotate(5deg);
+	filter: drop-shadow(0 4px 12px rgba(0, 28, 119, 0.25));
+}
+
+/* Card Title */
+.dashboard-card-title {
+	font-weight: 700;
+	color: hsl(220, 30%, 15%);
+	margin-bottom: 0.6rem;
+	letter-spacing: -0.02em;
+	line-height: 1.3;
+	position: relative;
+	z-index: 2;
+	transition: color 0.3s ease;
+}
+
+.dashboard-card:hover .dashboard-card-title {
+	color: hsl(225, 100%, 30%);
+}
+
+/* Card Description */
+.dashboard-card-desc {
+	font-size: 1.05rem;
+	color: hsl(220, 15%, 45%);
+	line-height: 1.65;
+	position: relative;
+	z-index: 2;
+	transition: color 0.3s ease;
+}
+
+.dashboard-card:hover .dashboard-card-desc {
+	color: hsl(220, 20%, 35%);
+}
+
+/* DateTime Bar - Glassmorphism */
+.datetime-bar {
+	width: 100%;
+	background: rgba(255, 255, 255, 0.85);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border-top: 1px solid rgba(0, 28, 119, 0.1);
+	color: var(--text-clr);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.75rem 2rem;
+	font-size: 1rem;
+	box-shadow:
+		0 -4px 20px 0 rgba(0, 28, 119, 0.06),
+		inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	min-height: 3rem;
+	transition: all 0.3s ease;
+}
+
+.datetime-bar-section {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.datetime-bar-section.left {
+	flex: 1;
+	justify-content: flex-start;
+}
+
+.datetime-bar-section.center {
+	flex: 1;
+	justify-content: center;
+	text-align: center;
+}
+
+.datetime-bar-section.right {
+	flex: 1;
+	justify-content: flex-end;
+	text-align: right;
+	gap: 1rem;
+}
+
+.datetime-bar-user {
+	font-weight: 600;
+	color: var(--color-primary);
+}
+
+.datetime-bar-date {
+	font-weight: 600;
+	color: var(--color-primary);
+}
+
+.datetime-bar-time {
+	font-family: 'Poppins', monospace;
+	font-weight: 700;
+	color: var(--accent-clr);
+	letter-spacing: 1.5px;
+	font-size: 1.05rem;
+}
+
+.datetime-bar-company {
+	font-weight: 800;
+	color: var(--color-primary);
+	margin-left: 0.5rem;
+	letter-spacing: 1.5px;
+	font-size: 1.1rem;
+}
+
+.datetime-bar-logo {
+	height: 1.8rem;
+	margin-left: 0.5rem;
+	vertical-align: middle;
+	filter: drop-shadow(0 2px 4px rgba(0, 28, 119, 0.1));
+}
+
+/* Scrollbar Styling */
+.dashboard-cards::-webkit-scrollbar {
+	height: 10px;
+}
+
+.dashboard-cards::-webkit-scrollbar-thumb {
+	background: linear-gradient(135deg,
+			hsl(225, 100%, 30%) 0%,
+			hsl(225, 100%, 40%) 100%);
+	border-radius: 10px;
+	transition: background 0.3s ease;
+}
+
+.dashboard-cards::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(135deg,
+			hsl(225, 100%, 23%) 0%,
+			hsl(225, 100%, 30%) 100%);
+}
+
+.dashboard-cards::-webkit-scrollbar-track {
+	background: rgba(224, 231, 239, 0.5);
+	border-radius: 10px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
 @media (max-width: 1200px) {
 	.dashboard-content {
 		max-width: 98vw;
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
 	}
+
 	.dashboard-cards {
 		max-width: 98vw;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1.5rem;
 	}
 }
+
 @media (max-width: 900px) {
 	.dashboard-content {
 		padding-top: 2rem;
 		padding-bottom: 1rem;
 	}
+
 	.dashboard-cards {
 		grid-template-columns: 1fr;
-		gap: 1.1rem;
+		gap: 1.2rem;
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
 		max-width: 100vw;
 	}
+
 	.dashboard-card {
-		min-width: 210px;
-		max-width: 260px;
-		padding: 1.5rem 1rem 1rem 1rem;
+		min-width: 240px;
+		max-width: 400px;
+		padding: 2rem 1.5rem 1.5rem 1.5rem;
 	}
+
 	.dashboard-title {
-		font-size: 2rem;
+		font-size: 2.5rem;
 	}
 }
+
 @media (max-width: 600px) {
 	.dashboard-root {
 		min-height: 100dvh;
 	}
+
 	.dashboard-content {
-		padding-top: 1.2rem;
-		padding-bottom: 0.5rem;
+		padding-top: 1.5rem;
+		padding-bottom: 0.8rem;
 	}
+
 	.dashboard-title {
-		font-size: 1.5rem;
+		font-size: 2rem;
+		letter-spacing: -1px;
 	}
-	.dashboard-cards {
-		grid-template-columns: 1fr;
-		gap: 0.7rem;
-		padding-left: 0.2rem;
-		padding-right: 0.2rem;
-	}
-	.dashboard-card {
-		min-width: 140px;
-		max-width: 180px;
-		padding: 0.7rem 0.3rem 0.5rem 0.3rem;
-	}
-	.dashboard-card-title {
+
+	.dashboard-subtitle {
 		font-size: 1rem;
 	}
-	.dashboard-card-desc {
-		font-size: 0.92rem;
+
+	.dashboard-cards {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
 	}
+
+	.dashboard-card {
+		min-width: 200px;
+		max-width: 100%;
+		padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+	}
+
+	.dashboard-card-icon {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.dashboard-card-title {
+		font-size: 1.15rem;
+	}
+
+	.dashboard-card-desc {
+		font-size: 0.95rem;
+	}
+
 	.datetime-bar {
-		font-size: 0.92rem;
-		padding: 0.4rem 0.5rem;
+		font-size: 0.9rem;
+		padding: 0.5rem 0.75rem;
 		flex-direction: column;
-		gap: 0.2rem;
+		gap: 0.3rem;
 		min-height: unset;
 		align-items: flex-start;
 	}
+
 	.datetime-bar-section {
 		width: 100%;
 		justify-content: flex-start !important;
 		text-align: left !important;
-		gap: 0.3rem;
+		gap: 0.4rem;
 	}
+
 	.datetime-bar-section.right {
-		margin-top: 0.1rem;
+		margin-top: 0.2rem;
 	}
-}
 
-.dashboard-card:hover, .dashboard-card:focus {
-	box-shadow: 0 6px 32px 0 rgba(0,28,119,0.16), 0 3px 8px 0 rgba(0,28,119,0.10);
-	background: #f7faff;
-	outline: none;
-	border: 1.5px solid var(--color-primary);
-	transform: translateY(-3px) scale(1.025);
-}
-.dashboard-card-icon {
-	font-size: 2.1rem;
-	margin-bottom: 1.1rem;
-	color: var(--color-primary);
-	opacity: 0.85;
-}
+	.datetime-bar-time {
+		font-size: 0.95rem;
+	}
 
-.dashboard-card-title {
-	font-size: 1.22rem;
-	font-weight: 700;
-	color: #11121a;
-	margin-bottom: 0.4rem;
-	letter-spacing: 0.01em;
-}
-
-.dashboard-card-desc {
-	font-size: 1.01rem;
-	color: var(--secondary-text-clr);
-	line-height: 1.6;
-}
-
-@media (max-width: 900px) {
-	.dashboard-cards {
-		gap: 1.1rem;
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
-	}
-	.dashboard-card {
-		min-width: 210px;
-		flex: 0 0 210px;
-		padding: 1.5rem 1rem 1rem 1rem;
-	}
-}
-
-@media (max-width: 600px) {
-	.dashboard-title {
-		font-size: 1.5rem;
-	}
-	.dashboard-cards {
-		gap: 0.7rem;
-	}
-	.dashboard-card {
-		min-width: 160px;
-		flex: 0 0 160px;
-		padding: 1rem 0.5rem 0.7rem 0.5rem;
-	}
-	.dashboard-card-title {
+	.datetime-bar-company {
 		font-size: 1rem;
 	}
-	.dashboard-card-desc {
-		font-size: 0.92rem;
+}
+
+/* Animation for card entrance */
+@keyframes cardEntrance {
+	from {
+		opacity: 0;
+		transform: translateY(30px) scale(0.95);
 	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+.dashboard-card {
+	animation: cardEntrance 0.6s ease-out backwards;
+}
+
+.dashboard-card:nth-child(1) {
+	animation-delay: 0.1s;
+}
+
+.dashboard-card:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.dashboard-card:nth-child(3) {
+	animation-delay: 0.3s;
+}
+
+.dashboard-card:nth-child(4) {
+	animation-delay: 0.4s;
 }

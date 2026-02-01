@@ -1,5 +1,5 @@
 // NavBar.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom"; // ← Changed from Link to NavLink
 import "../styles/NavBar.css";
 import LogoutModal from "./LogoutModal";
@@ -8,6 +8,7 @@ import { FaChevronDown } from "react-icons/fa";
 const NavBar: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+    const navbarRef = useRef<HTMLDivElement>(null);
     const closeMenu = () => setOpenDropdown(null);
     const toggleDropdown = (dropdown: string) => {
         setOpenDropdown((prev) => (prev === dropdown ? null : dropdown));
@@ -20,9 +21,26 @@ const NavBar: React.FC = () => {
         navigate('/login');
     };
 
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+                closeMenu();
+            }
+        };
+
+        if (openDropdown) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [openDropdown]);
+
     return (
         <>
-            <nav className="navbar">
+            <nav className="navbar" ref={navbarRef}>
                 <div className="navbar-container">
                     <NavLink to="/dashboard" className="navbar-logo" onClick={closeMenu}>
                         eRefund
