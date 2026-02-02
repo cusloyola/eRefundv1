@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom"; // ← Changed from Lin
 import "../styles/NavBar.css";
 import LogoutModal from "./LogoutModal";
 import { FaChevronDown } from "react-icons/fa";
+import { useUserRole } from "../hooks/useUserRole";
 
 const NavBar: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -14,6 +15,10 @@ const NavBar: React.FC = () => {
         setOpenDropdown((prev) => (prev === dropdown ? null : dropdown));
     };
     const navigate = useNavigate();
+
+    // Get user role from localStorage
+    const { isAccountingRole, isAdminRole, isCreditAndCollection } = useUserRole();
+
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
@@ -59,37 +64,52 @@ const NavBar: React.FC = () => {
                             {openDropdown === 'operations' && (
                                 <div className="dropdown-menu">
                                     <NavLink
-                                        to="/operations/request"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        to="/operations/request-process-refund"
+                                        className={`dropdown-item${isCreditAndCollection ? ' disabled' : ''}`}
+                                        onClick={(e) => {
+                                            if (isCreditAndCollection) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Request/Process Refund
                                     </NavLink>
                                     <NavLink
                                         to="/operations/hold"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        className={`dropdown-item${isAccountingRole || isAdminRole || isCreditAndCollection ? '' : ' disabled'}`}
+                                        onClick={(e) => {
+                                            if (!isAccountingRole && !isAdminRole && !isCreditAndCollection) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Hold/Approve Refund
                                     </NavLink>
                                     <NavLink
                                         to="/operations/prepare-check"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        className={`dropdown-item${isAccountingRole || isAdminRole ? '' : ' disabled'}`}
+                                        onClick={(e) => {
+                                            if (!isAccountingRole && !isAdminRole) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Prepare Check
                                     </NavLink>
                                     <NavLink
                                         to="/operations/release"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        className={`dropdown-item${isAccountingRole || isAdminRole ? '' : ' disabled'}`}
+                                        onClick={(e) => {
+                                            if (!isAccountingRole && !isAdminRole) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Release (Batch Update)
                                     </NavLink>
                                     <NavLink
                                         to="/operations/import-files"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        className={`dropdown-item${isAccountingRole || isAdminRole ? '' : ' disabled'}`}
+                                        onClick={(e) => {
+                                            if (!isAccountingRole && !isAdminRole) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Import Files for Update
                                     </NavLink>
@@ -129,37 +149,52 @@ const NavBar: React.FC = () => {
                             {openDropdown === 'reports' && (
                                 <div className="dropdown-menu">
                                     <NavLink
-                                        to="/reports"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        to="/reports/processed-refund"
+                                        className={`dropdown-item${isCreditAndCollection ? ' disabled' : ''}`}
+                                        onClick={(e) => {
+                                            if (isCreditAndCollection) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Processed Refund
                                     </NavLink>
                                     <NavLink
-                                        to="/reports"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        to="/reports/container-charges"
+                                        className={`dropdown-item${isCreditAndCollection ? ' disabled' : ''}`}
+                                        onClick={(e) => {
+                                            if (isCreditAndCollection) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Container Charges
                                     </NavLink>
                                     <NavLink
-                                        to="/reports"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        to="/reports/check-preparation"
+                                        className={`dropdown-item${isAccountingRole || isAdminRole || isCreditAndCollection ? '' : ' disabled'}`}
+                                        onClick={(e) => {
+                                            if (!isAccountingRole && !isAdminRole && !isCreditAndCollection) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Check Preparation
                                     </NavLink>
                                     <NavLink
-                                        to="/reports"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        to="/reports/for-export"
+                                        className={`dropdown-item${isAccountingRole ? '' : ' disabled'}`}
+                                        onClick={(e) => {
+                                            if (!isAccountingRole) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         For Export
                                     </NavLink>
                                     <NavLink
-                                        to="/reports"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
+                                        to="/reports/summary-container-detention"
+                                        className={`dropdown-item${isCreditAndCollection ? ' disabled' : ''}`}
+                                        onClick={(e) => {
+                                            if (isCreditAndCollection) e.preventDefault();
+                                            else closeMenu();
+                                        }}
                                     >
                                         Summary of Container Detention
                                     </NavLink>
@@ -178,21 +213,21 @@ const NavBar: React.FC = () => {
                             {openDropdown === 'help' && (
                                 <div className="dropdown-menu">
                                     <NavLink
-                                        to="/help"
+                                        to="/help/topics"
                                         className="dropdown-item"
                                         onClick={closeMenu}
                                     >
                                         Help Topics
                                     </NavLink>
                                     <NavLink
-                                        to="/help"
+                                        to="/help/index"
                                         className="dropdown-item"
                                         onClick={closeMenu}
                                     >
                                         Index
                                     </NavLink>
                                     <NavLink
-                                        to="/help"
+                                        to="/help/about"
                                         className="dropdown-item"
                                         onClick={closeMenu}
                                     >

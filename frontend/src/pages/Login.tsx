@@ -13,6 +13,21 @@ export const STATIC_USERS = [
         email: "admin@demo.com",
         password: "admin123"
     },
+    {
+        role: "equipment control",
+        email: "equipment@demo.com",
+        password: "admin123"
+    },
+    {
+        role: "accounting",
+        email: "accounting@demo.com",
+        password: "admin123"
+    },
+    {
+        role: "credit and collection",
+        email: "credit@demo.com",
+        password: "admin123"
+    },
 ];
 
 interface LoginFormData {
@@ -113,6 +128,7 @@ function Login() {
                     localStorage.setItem('authToken', 'demo-token-' + Date.now());
                     localStorage.setItem('userEmail', user.email);
                     localStorage.setItem('userRole', user.role);
+                    console.log(`User role is: ${user.role}`);
 
                     toast.success("Login successful! Redirecting...");
 

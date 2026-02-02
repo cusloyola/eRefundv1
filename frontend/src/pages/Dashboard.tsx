@@ -1,11 +1,14 @@
 import React from "react";
 import NavBar from "../components/NavBar";
-import DateTimeBar from "../components/DateTimeBar";
-import { FaFileInvoiceDollar, FaSearchDollar, FaChartBar, FaQuestionCircle } from "react-icons/fa";
+import { FaChartBar, FaUserCircle, FaHistory, FaFileExport } from "react-icons/fa";
 import wallemLogo from "../assets/wallemrectangle.png";
 import "../styles/Dashboard.css";
+import { useUserRole } from "../hooks/useUserRole";
 
 const Dashboard: React.FC = () => {
+
+    const { isAccountingRole, isCreditAndCollection } = useUserRole();
+
     return (
         <div className="dashboard-root">
             <NavBar />
@@ -20,30 +23,42 @@ const Dashboard: React.FC = () => {
                     </p>
                 </section>
                 <section className="dashboard-cards">
-                    <a href="/operations/request" className="dashboard-card">
-                        <FaFileInvoiceDollar className="dashboard-card-icon" />
-                        <span className="dashboard-card-title">Request/Process Refund</span>
-                        <span className="dashboard-card-desc">Start a new refund or process pending requests.</span>
-                    </a>
-                    <a href="/inquiry" className="dashboard-card">
-                        <FaSearchDollar className="dashboard-card-icon" />
-                        <span className="dashboard-card-title">Inquiry</span>
-                        <span className="dashboard-card-desc">View the list and status of refunds.</span>
-                    </a>
-                    <a href="/reports" className="dashboard-card">
+                    <a href={isCreditAndCollection ? "/reports/check-preparation" : "/reports/processed-refund"} className="dashboard-card">
                         <FaChartBar className="dashboard-card-icon" />
                         <span className="dashboard-card-title">Reports</span>
+                        <span className="dashboard-card-desc">Start a new refund or process pending requests.</span>
+                    </a>
+                    <a
+                        href={isAccountingRole ? "/user-account" : "#"}
+                        className={`dashboard-card${!isAccountingRole ? ' disabled' : ''}`}
+                        onClick={(e) => !isAccountingRole && e.preventDefault()}
+                    >
+                        <FaUserCircle className="dashboard-card-icon" />
+                        <span className="dashboard-card-title">User Account</span>
+                        <span className="dashboard-card-desc">View the list and status of refunds.</span>
+                    </a>
+                    <a
+                        href={isAccountingRole ? "/logs" : "#"}
+                        className={`dashboard-card${!isAccountingRole ? ' disabled' : ''}`}
+                        onClick={(e) => !isAccountingRole && e.preventDefault()}
+                    >
+                        <FaHistory className="dashboard-card-icon" />
+                        <span className="dashboard-card-title">Logs</span>
                         <span className="dashboard-card-desc">Access processed refunds, container charges, and more.</span>
                     </a>
-                    <a href="/help" className="dashboard-card">
-                        <FaQuestionCircle className="dashboard-card-icon" />
-                        <span className="dashboard-card-title">Help</span>
+                    <a
+                        href={isAccountingRole ? "/file-export" : "#"}
+                        className={`dashboard-card${!isAccountingRole ? ' disabled' : ''}`}
+                        onClick={(e) => !isAccountingRole && e.preventDefault()}
+                    >
+                        <FaFileExport className="dashboard-card-icon" />
+                        <span className="dashboard-card-title">File Export</span>
                         <span className="dashboard-card-desc">Browse help topics, index, and about information.</span>
                     </a>
                 </section>
             </main>
-            <DateTimeBar userName="Juan G. Dela Cruz" companyName="WALLEM" />
-        </div>
+            {/*             <DateTimeBar userName="Juan G. Dela Cruz" companyName="WALLEM" />
+ */}        </div>
     );
 };
 
