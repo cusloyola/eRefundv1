@@ -7,21 +7,12 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9998;
-  animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
 }
 
 .add-user-modal-backdrop.closing {
-  animation: fadeOut 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  opacity: 0;
 }
 
 .add-user-modal {
@@ -37,21 +28,12 @@
   max-height: 90vh;
   overflow-y: auto;
   z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
 }
 
 .add-user-modal.closing {
-  animation: slideDown 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideDown {
-  from {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translate(-50%, -48%) scale(0.98);
-    opacity: 0;
-  }
+  opacity: 0;
 }
 
 /* Modal Header */
