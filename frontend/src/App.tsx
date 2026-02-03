@@ -18,6 +18,7 @@ import HoldApproveRefund from './pages/HoldApproveRefund'
 import ReleaseRefund from './pages/ReleaseRefund'
 import ForExport from './pages/ForExport'
 import UploadRelease from './pages/UploadRelease'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
 
@@ -26,23 +27,65 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/operations" element={<Operations />} />
-        <Route path="operations/hold-approve-refund" element={<HoldApproveRefund />} />
-        <Route path="operations/prepare-check" element={<PrepareCheck />} />
-        <Route path="operations/release-refund" element={<ReleaseRefund />} />  
-        <Route path="operations/upload-release" element={<UploadRelease />} />
-        <Route path="/inquiry" element={<Inquiry />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/reports/processed-refund" element={<ProcessedRefund />} />
-        <Route path="/reports/container-charges" element={<ContainerCharges />} />
-        <Route path="/reports/summary-container-detention" element={<SummaryContainerDetention />} />
-        <Route path="/reports/for-export" element={<ForExport />} />
-        <Route path="/user-account" element={<UserAccount />} />
-        <Route path="/logs" element={<Logs />} />
-        <Route path="/file-export" element={<FileExport />} />
+        
+        {/* Protected Routes - Require Authentication */}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/operations" element={<ProtectedRoute><Operations /></ProtectedRoute>} />
+        <Route path="/inquiry" element={<ProtectedRoute><Inquiry /></ProtectedRoute>} />
+        <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+        <Route path="/user-account" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
+        <Route path="/logs" element={<ProtectedRoute><Logs /></ProtectedRoute>} />
+        <Route path="/file-export" element={<ProtectedRoute><FileExport /></ProtectedRoute>} />
+        
+        {/* Operations - Role-Based Access */}
+        <Route path="operations/hold-approve-refund" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin', 'credit and collection']}>
+            <HoldApproveRefund />
+          </ProtectedRoute>
+        } />
+        <Route path="operations/prepare-check" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin']}>
+            <PrepareCheck />
+          </ProtectedRoute>
+        } />
+        <Route path="operations/release-refund" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin']}>
+            <ReleaseRefund />
+          </ProtectedRoute>
+        } />
+        <Route path="operations/upload-release" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin']}>
+            <UploadRelease />
+          </ProtectedRoute>
+        } />
+        
+        {/* Reports - Role-Based Access */}
+        <Route path="/reports/processed-refund" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin', 'equipment control']}>
+            <ProcessedRefund />
+          </ProtectedRoute>
+        } />
+        <Route path="/reports/container-charges" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin', 'equipment control']}>
+            <ContainerCharges />
+          </ProtectedRoute>
+        } />
+        <Route path="/reports/check-preparation" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin', 'credit and collection']}>
+            <Reports />
+          </ProtectedRoute>
+        } />
+        <Route path="/reports/for-export" element={
+          <ProtectedRoute allowedRoles={['accounting']}>
+            <ForExport />
+          </ProtectedRoute>
+        } />
+        <Route path="/reports/summary-container-detention" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin', 'equipment control']}>
+            <SummaryContainerDetention />
+          </ProtectedRoute>
+        } />
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer position="top-center" autoClose={1500} theme="colored" />
