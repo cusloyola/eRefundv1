@@ -74,7 +74,7 @@ const NavBar: React.FC = () => {
                                         Request/Process Refund
                                     </NavLink>
                                     <NavLink
-                                        to="/operations/hold"
+                                        to="/operations/hold-approve-refund"
                                         className={`dropdown-item${isAccountingRole || isAdminRole || isCreditAndCollection ? '' : ' disabled'}`}
                                         onClick={(e) => {
                                             if (!isAccountingRole && !isAdminRole && !isCreditAndCollection) e.preventDefault();
@@ -94,7 +94,7 @@ const NavBar: React.FC = () => {
                                         Prepare Check
                                     </NavLink>
                                     <NavLink
-                                        to="/operations/release"
+                                        to="/operations/release-refund"
                                         className={`dropdown-item${isAccountingRole || isAdminRole ? '' : ' disabled'}`}
                                         onClick={(e) => {
                                             if (!isAccountingRole && !isAdminRole) e.preventDefault();
@@ -104,7 +104,7 @@ const NavBar: React.FC = () => {
                                         Release (Batch Update)
                                     </NavLink>
                                     <NavLink
-                                        to="/operations/import-files"
+                                        to="/operations/upload-release"
                                         className={`dropdown-item${isAccountingRole || isAdminRole ? '' : ' disabled'}`}
                                         onClick={(e) => {
                                             if (!isAccountingRole && !isAdminRole) e.preventDefault();
@@ -117,26 +117,13 @@ const NavBar: React.FC = () => {
                             )}
                         </div>
 
-                        <div className="navbar-dropdown">
-                            <button
-                                className="navbar-link dropdown-toggle"
-                                onClick={() => toggleDropdown('inquiry')}
-                                aria-expanded={openDropdown === 'inquiry'}
-                            >
-                                Inquiry <FaChevronDown className="dropdown-icon" />
-                            </button>
-                            {openDropdown === 'inquiry' && (
-                                <div className="dropdown-menu">
-                                    <NavLink
-                                        to="/inquiry"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
-                                    >
-                                        List of Refund
-                                    </NavLink>
-                                </div>
-                            )}
-                        </div>
+                        <NavLink
+                            to="/inquiry"
+                            className="navbar-link"
+                            onClick={closeMenu}
+                        >
+                            Inquiry
+                        </NavLink>
 
                         <div className="navbar-dropdown">
                             <button
@@ -197,41 +184,6 @@ const NavBar: React.FC = () => {
                                         }}
                                     >
                                         Summary of Container Detention
-                                    </NavLink>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="navbar-dropdown">
-                            <button
-                                className="navbar-link dropdown-toggle"
-                                onClick={() => toggleDropdown('help')}
-                                aria-expanded={openDropdown === 'help'}
-                            >
-                                Help <FaChevronDown className="dropdown-icon" />
-                            </button>
-                            {openDropdown === 'help' && (
-                                <div className="dropdown-menu">
-                                    <NavLink
-                                        to="/help/topics"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
-                                    >
-                                        Help Topics
-                                    </NavLink>
-                                    <NavLink
-                                        to="/help/index"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
-                                    >
-                                        Index
-                                    </NavLink>
-                                    <NavLink
-                                        to="/help/about"
-                                        className="dropdown-item"
-                                        onClick={closeMenu}
-                                    >
-                                        About
                                     </NavLink>
                                 </div>
                             )}

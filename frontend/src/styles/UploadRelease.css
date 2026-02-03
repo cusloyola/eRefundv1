@@ -1,0 +1,116 @@
+/* Upload Release - page-specific styles */
+
+.upload-release-upload-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 28, 119, 0.08);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.upload-release-upload-text {
+  min-width: 240px;
+}
+
+.upload-release-upload-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.upload-release-upload-desc {
+  margin: 0;
+  color: var(--text-clr);
+  font-size: 0.95rem;
+}
+
+.upload-release-upload-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.upload-release-file-input {
+  display: none;
+}
+
+.upload-release-file-name {
+  font-size: 0.9rem;
+  color: var(--text-clr);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload-release-btn {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 28, 119, 0.12);
+}
+
+.upload-release-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.upload-release-btn.primary {
+  background: linear-gradient(135deg, var(--color-primary), hsl(225, 100%, 30%));
+  color: #fff;
+}
+
+.upload-release-btn.primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 28, 119, 0.2);
+}
+
+.upload-release-btn.secondary {
+  background: rgba(0, 28, 119, 0.1);
+  color: var(--color-primary);
+}
+
+.upload-release-btn.secondary:hover:not(:disabled) {
+  background: rgba(0, 28, 119, 0.15);
+}
+
+.upload-release-btn.success {
+  background: linear-gradient(135deg, hsl(120, 60%, 50%), hsl(120, 65%, 45%));
+  color: #fff;
+}
+
+.upload-release-btn.success:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(19, 120, 55, 0.2);
+}
+
+.upload-release-footer {
+  width: 100%;
+  text-align: right;
+  color: hsl(220, 15%, 50%);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.upload-release-footer b{
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+
+.upload-release-records {
+  font-weight: 600;
+  color: var(--text-clr);
+}

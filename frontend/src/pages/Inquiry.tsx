@@ -52,7 +52,7 @@ const Inquiry: React.FC = () => {
             <NavBar />
             <main className="inquiry-content">
                 <header className="inquiry-header">
-                    <h1 className="inquiry-title flex justify-center">Inquiry</h1>
+                    <h1 className="inquiry-title flex justify-center">List of Refund</h1>
                     <p className="inquiry-subtitle flex justify-center">
                         View and search refund transactions. Use the filters below to refine your results.
                     </p>
