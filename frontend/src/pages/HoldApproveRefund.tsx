@@ -202,19 +202,19 @@ const HoldApproveRefund: React.FC = () => {
                             <a href="/inquiry" className="processed-refund-info-link">
                                 Go to inquiries
                             </a>
-                            <a href="/hold-refund" className="processed-refund-info-link">
+                            <a href="/operations/list-hold-refund" className="processed-refund-info-link">
                                 List of Hold Refund
                             </a>
                         </div>
                         <div className="processed-refund-info-actions">
-                            <button 
+                            <button
                                 className="processed-refund-info-action-btn back"
                                 onClick={() => handleModalOpen("back")}
                                 disabled={selectedRows.size === 0}
                             >
                                 Back to Equipment
                             </button>
-                            <button 
+                            <button
                                 className="processed-refund-info-action-btn forward"
                                 onClick={() => handleModalOpen("forward")}
                                 disabled={selectedRows.size === 0}
@@ -306,23 +306,22 @@ const HoldApproveRefund: React.FC = () => {
                         Next
                     </button>
                 </nav>
-                
-                <ConfirmationModal
-                    isOpen={isModalOpen}
-                    isClosing={isModalClosing}
-                    title={modalAction === "back" ? "Back to Equipment" : "Forward to Inquiry"}
-                    message={
-                        modalAction === "back"
-                            ? "This record(s) will be forwarded back to equipment. Do you want to proceed?"
-                            : "This record(s) will be forwarded to inquiry. Do you want to proceed?"
-                    }
-                    confirmText={modalAction === "back" ? "Go Back" : "Forward"}
-                    cancelText="Cancel"
-                    onConfirm={handleModalConfirm}
-                    onCancel={handleModalClose}
-                    variant={modalAction === "back" ? "primary" : "primary"}
-                />
             </main>
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                isClosing={isModalClosing}
+                title={modalAction === "back" ? "Back to Equipment" : "Forward to Inquiry"}
+                message={
+                    modalAction === "back"
+                        ? "This record(s) will be forwarded back to equipment. Do you want to proceed?"
+                        : "This record(s) will be forwarded to inquiry. Do you want to proceed?"
+                }
+                confirmText={modalAction === "back" ? "Go Back" : "Forward"}
+                cancelText="Cancel"
+                onConfirm={handleModalConfirm}
+                onCancel={handleModalClose}
+                variant={modalAction === "back" ? "primary" : "primary"}
+            />
         </div>
     );
 };

@@ -19,6 +19,8 @@ import ReleaseRefund from './pages/ReleaseRefund'
 import ForExport from './pages/ForExport'
 import UploadRelease from './pages/UploadRelease'
 import ProtectedRoute from './components/ProtectedRoute'
+import CheckPreparation from './pages/CheckPreparation'
+import ListHoldRefund from './pages/ListHoldRefund'
 
 function App() {
 
@@ -41,6 +43,11 @@ function App() {
         <Route path="operations/hold-approve-refund" element={
           <ProtectedRoute allowedRoles={['accounting', 'admin', 'credit and collection']}>
             <HoldApproveRefund />
+          </ProtectedRoute>
+        } />
+        <Route path="operations/list-hold-refund" element={
+          <ProtectedRoute allowedRoles={['accounting', 'admin', 'credit and collection']}>
+            <ListHoldRefund />
           </ProtectedRoute>
         } />
         <Route path="operations/prepare-check" element={
@@ -72,7 +79,7 @@ function App() {
         } />
         <Route path="/reports/check-preparation" element={
           <ProtectedRoute allowedRoles={['accounting', 'admin', 'credit and collection']}>
-            <Reports />
+            <CheckPreparation />
           </ProtectedRoute>
         } />
         <Route path="/reports/for-export" element={

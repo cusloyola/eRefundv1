@@ -1,35 +1,25 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import NavBar from "../components/NavBar";
-import ConfirmationModal from "../components/ConfirmationModal";
 import "../styles/ProcessedRefund.css";
 import {
-    prepareCheckRows,
-    prepareCheckColumns,
+    holdApproveRefundRows,
+    holdApproveRefundColumns,
     ROWS_PER_PAGE,
-} from "../../dummy_data/prepareCheckData";
+} from "../../dummy_data/holdApproveRefundData";
 
-const CheckPreparation: React.FC = () => {
-    const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+const ListHoldRefund: React.FC = () => {
+    const [selectedRows ] = useState<Set<number>>(new Set());
     const [search, setSearch] = useState("");
     const [searchBy, setSearchBy] = useState("controlNo");
     const [page, setPage] = useState(1);
     const [dateFrom, setDateFrom] = useState("2023-02-02");
     const [dateTo, setDateTo] = useState("2026-02-02");
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalClosing, setIsModalClosing] = useState(false);
 
-    const filteredRows = prepareCheckRows.filter((row) => {
+    const filteredRows = holdApproveRefundRows.filter((row) => {
         if (!search) return true;
         const value = row[searchBy as keyof typeof row] || "";
         return value.toLowerCase().includes(search.toLowerCase());
     });
-
-    // Calculate total amount refunded from filtered rows
-    const totalAmountRefunded = filteredRows.reduce((sum, row) => {
-        const amount = parseFloat(row.amountRefunded.replace(/,/g, ""));
-        return sum + amount;
-    }, 0);
 
     // Pagination logic
     const totalPages = Math.ceil(filteredRows.length / ROWS_PER_PAGE) || 1;
@@ -48,29 +38,6 @@ const CheckPreparation: React.FC = () => {
     React.useEffect(() => {
         setPage(1);
     }, [search, searchBy]);
-
-    // Toggle row selection
-    const toggleRowSelection = (index: number) => {
-        const newSelected = new Set(selectedRows);
-        if (newSelected.has(index)) {
-            newSelected.delete(index);
-        } else {
-            newSelected.add(index);
-        }
-        setSelectedRows(newSelected);
-    };
-
-    // Select all rows on current page
-    const toggleSelectAll = () => {
-        if (selectedRows.size === paginatedRows.length) {
-            setSelectedRows(new Set());
-        } else {
-            const allIndices = new Set(
-                paginatedRows.map((_, idx) => (page - 1) * ROWS_PER_PAGE + idx)
-            );
-            setSelectedRows(allIndices);
-        }
-    };
 
     // Pagination page numbers
     const renderPageNumbers = () => {
@@ -109,29 +76,12 @@ const CheckPreparation: React.FC = () => {
         setPage(1);
     };
 
-    const handleModalOpen = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleModalClose = () => {
-        setIsModalClosing(true);
-        setTimeout(() => {
-            setIsModalOpen(false);
-            setIsModalClosing(false);
-        }, 300);
-    };
-
-    const handleModalConfirm = () => {
-        toast.success("Record was successfully forwarded for export");
-        handleModalClose();
-    };
-
     return (
         <div className="processed-refund-root">
             <NavBar />
             <main className="processed-refund-content">
                 <header className="processed-refund-header">
-                    <h1 className="processed-refund-title">Check Preparation</h1>
+                    <h1 className="processed-refund-title">List of Hold Refund</h1>
                 </header>
 
                 <section
@@ -148,7 +98,7 @@ const CheckPreparation: React.FC = () => {
                             onChange={(e) => setSearchBy(e.target.value)}
                             className="processed-refund-select"
                         >
-                            {prepareCheckColumns.map((col) => (
+                            {holdApproveRefundColumns.map((col) => (
                                 <option key={col.key} value={col.key}>
                                     {col.label}
                                 </option>
@@ -195,40 +145,14 @@ const CheckPreparation: React.FC = () => {
                     </div>
                 </section>
 
-                <div className="processed-refund-info-section">
-                    <div className="processed-refund-info-card">
-                        <a href="/inquiry" className="processed-refund-info-link">
-                            Go to Inquiries
-                        </a>
-                        <button
-                            className="processed-refund-info-action-btn forward"
-                            onClick={handleModalOpen}
-                            disabled={selectedRows.size === 0}
-                        >
-                            For Export
-                        </button>
-                    </div>
-                </div>
-
                 <section
                     className="processed-refund-table-container"
-                    aria-label="Check preparation results"
+                    aria-label="Hold/Approve refund results"
                 >
                     <table className="processed-refund-table">
                         <thead>
                             <tr>
-                                <th className="processed-refund-checkbox-col">
-                                    <input
-                                        type="checkbox"
-                                        checked={
-                                            paginatedRows.length > 0 &&
-                                            selectedRows.size === paginatedRows.length
-                                        }
-                                        onChange={toggleSelectAll}
-                                        aria-label="Select all rows"
-                                    />
-                                </th>
-                                {prepareCheckColumns.map((col) => (
+                                {holdApproveRefundColumns.map((col) => (
                                     <th key={col.key}>{col.label}</th>
                                 ))}
                             </tr>
@@ -237,7 +161,7 @@ const CheckPreparation: React.FC = () => {
                             {paginatedRows.length === 0 ? (
                                 <tr>
                                     <td
-                                        colSpan={prepareCheckColumns.length + 1}
+                                        colSpan={holdApproveRefundColumns.length + 1}
                                         className="processed-refund-no-data"
                                     >
                                         No records found.
@@ -249,14 +173,7 @@ const CheckPreparation: React.FC = () => {
                                     const isSelected = selectedRows.has(globalIndex);
                                     return (
                                         <tr key={idx} className={isSelected ? "selected" : ""}>
-                                            <td className="processed-refund-checkbox-col">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={isSelected}
-                                                    onChange={() => toggleRowSelection(globalIndex)}
-                                                />
-                                            </td>
-                                            {prepareCheckColumns.map((col) => (
+                                            {holdApproveRefundColumns.map((col) => (
                                                 <td key={col.key}>
                                                     {row[col.key as keyof typeof row]}
                                                 </td>
@@ -291,24 +208,10 @@ const CheckPreparation: React.FC = () => {
                         Next
                     </button>
                 </nav>
-
-                <ConfirmationModal
-                    isOpen={isModalOpen}
-                    isClosing={isModalClosing}
-                    title="Forward for Export"
-                    message="This record(s) will be forwarded for export. Do you want to proceed?"
-                    confirmText="Forward"
-                    cancelText="Cancel"
-                    onConfirm={handleModalConfirm}
-                    onCancel={handleModalClose}
-                    variant="primary"
-                />
-                <footer className="inquiry-footer">
-                    Total Amount Refunded: <b>{totalAmountRefunded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>
-                </footer>
+                
             </main>
         </div>
     );
 };
 
-export default CheckPreparation;
+export default ListHoldRefund;
