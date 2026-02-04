@@ -292,21 +292,22 @@ const CheckPreparation: React.FC = () => {
                     </button>
                 </nav>
 
-                <ConfirmationModal
-                    isOpen={isModalOpen}
-                    isClosing={isModalClosing}
-                    title="Forward for Export"
-                    message="This record(s) will be forwarded for export. Do you want to proceed?"
-                    confirmText="Forward"
-                    cancelText="Cancel"
-                    onConfirm={handleModalConfirm}
-                    onCancel={handleModalClose}
-                    variant="primary"
-                />
+
                 <footer className="inquiry-footer">
                     Total Amount Refunded: <b>{totalAmountRefunded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>
                 </footer>
             </main>
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                isClosing={isModalClosing}
+                title="Forward for Export"
+                message="This record(s) will be forwarded for export. Do you want to proceed?"
+                confirmText="Forward"
+                cancelText="Cancel"
+                onConfirm={handleModalConfirm}
+                onCancel={handleModalClose}
+                variant="primary"
+            />
         </div>
     );
 };

@@ -68,7 +68,7 @@ const FileExport: React.FC = () => {
     };
 
     const totalAmountRefunded = filteredRows.reduce((sum, row) => {
-        const amount = parseFloat(row.amountRefunded.replace(/,/g, ""));
+        const amount = parseFloat(row.amountRefunded.replace(/[₱,]/g, ""));
         return sum + amount;
     }, 0);
 
